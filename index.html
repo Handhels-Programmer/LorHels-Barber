@@ -25,6 +25,11 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
+        
+        .hidden-view { 
+    display: none !important; /* El !important asegura que desaparezca del flujo */
+    opacity: 0; 
+}
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
@@ -64,7 +69,7 @@
     </div>
 
     <main class="pt-20">
-        
+              
         <!-- VIEW: HOME -->
         <section id="view-home" class="page-transition active-view">
             <!-- Hero Section -->
@@ -212,14 +217,19 @@
                                 <div>
                                     <label class="block text-xs uppercase font-bold text-blue-400 mb-3 tracking-widest">Horario</label>
                                     <select id="book-time" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-100 focus:border-blue-500 outline-none transition">
+                                        <option value="18:00 AM">08:00 AM</option>
+                                        <option value="19:00 AM">09:00 AM</option>
                                         <option value="10:00 AM">10:00 AM</option>
                                         <option value="11:00 AM">11:00 AM</option>
-                                        <option value="12:00 PM">12:00 PM</option>
+                                        <option value="01:00 PM">01:00 PM</option>
                                         <option value="02:00 PM">02:00 PM</option>
                                         <option value="03:00 PM">03:00 PM</option>
                                         <option value="04:00 PM">04:00 PM</option>
                                         <option value="05:00 PM">05:00 PM</option>
                                         <option value="06:00 PM">06:00 PM</option>
+                                        <option value="07:00 PM">07:00 PM</option>
+                                        <option value="08:00 PM">08:00 PM</option>
+                                        <option value="09:00 PM">09:00 PM</option>
                                     </select>
                                 </div>
                             </div>
@@ -278,6 +288,9 @@
                         <button onclick="refreshData()" class="text-xs text-blue-400 hover:text-white flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full transition">
                             <i data-lucide="refresh-cw" size="14"></i> Sincronizar
                         </button>
+                        <button onclick="window.logout()" class="text-xs text-red-400 hover:text-white flex items-center gap-2 px-4 py-2 bg-red-500/10 rounded-full transition">
+    <i data-lucide="log-out" size="14"></i> Salir
+</button>
                     </div>
                     
                     <div class="overflow-x-auto">
@@ -335,6 +348,21 @@
             </div>
         </section>
 
+        <section id="view-login" class="page-transition hidden-view flex items-center justify-center min-h-[70vh] px-4">
+    <div class="bg-zinc-900 p-8 rounded-3xl border border-zinc-800 w-full max-w-md shadow-2xl">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-brand font-bold">Acceso Admin</h2>
+            <p class="text-zinc-500 text-sm mt-2">Introduce tus credenciales de Firebase</p>
+        </div>
+        <form id="login-form" class="space-y-4">
+            <input type="email" id="login-email" placeholder="Correo" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-100 outline-none focus:border-blue-500">
+            <input type="password" id="login-pass" placeholder="Contraseña" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-100 outline-none focus:border-blue-500">
+            <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-blue-500 transition">Entrar</button>
+            <button type="button" onclick="showView('home')" class="w-full text-zinc-500 text-sm">Volver</button>
+        </form>
+    </div>
+</section>
+
     </main>
 
     <!-- FOOTER -->
@@ -386,9 +414,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Configuración Firebase (Provista por el usuario)
+        // Configuración Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyA_7blyQDhaE0FBiXLUqZDIrckZ-mcednk",
             authDomain: "lorhels-barber.firebaseapp.com",
@@ -401,46 +429,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'lorhels-barber-blue-v1';
+        const appId = 'lorhels-barber-blue-v1';
 
-        let userUID = null;
+        let isAdmin = false;
 
-        // Init Lucide
+        // Iniciar íconos de Lucide
         lucide.createIcons();
 
-        // AUTH INITIALIZATION
+        // 1. AUTENTICACIÓN
         const startApp = async () => {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                if (!auth.currentUser) await signInAnonymously(auth);
             } catch (error) {
                 console.error("Auth Failure", error);
             }
         };
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userUID = user.uid;
-                console.log("Connected as:", userUID);
+            if (user && !user.isAnonymous) {
+                isAdmin = true;
                 syncAdminData();
+            } else {
+                isAdmin = false;
             }
         });
 
         startApp();
 
-        // VIEW NAVIGATION
+        // 2. NAVEGACIÓN Y MENÚ
         window.showView = (viewId) => {
+            if (viewId === 'admin' && !isAdmin) viewId = 'login'; 
+
             document.querySelectorAll('section').forEach(section => {
                 section.classList.remove('active-view');
                 section.classList.add('hidden-view');
             });
             const target = document.getElementById('view-' + viewId);
-            target.classList.remove('hidden-view');
-            target.classList.add('active-view');
-            window.scrollTo(0, 0);
+            if(target) {
+                target.classList.remove('hidden-view');
+                target.classList.add('active-view');
+                window.scrollTo(0, 0);
+            }
         };
 
         window.toggleMobileMenu = () => {
@@ -449,51 +478,112 @@
             menu.classList.toggle('flex');
         };
 
-        // BOOKING FORM SUBMISSION
+        // 3. LÓGICA DE LOGIN Y LOGOUT
+        const loginForm = document.getElementById('login-form');
+        if(loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const pass = document.getElementById('login-pass').value;
+                try {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                    isAdmin = true;
+                    showView('admin');
+                } catch (error) {
+                    alert("Error: Usuario o contraseña incorrectos"); 
+                }
+            });
+        }
+
+        window.logout = () => {
+            signOut(auth).then(() => location.reload());
+        };
+
+        // 4. RESERVAS Y WHATSAPP (CLIENTE)
         const bookingForm = document.getElementById('booking-form');
-        bookingForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!userUID) return;
+        if(bookingForm) {
+            bookingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const booking = {
+                    service: document.getElementById('book-service').value,
+                    barber: document.getElementById('book-barber').value,
+                    date: document.getElementById('book-date').value,
+                    time: document.getElementById('book-time').value,
+                    name: document.getElementById('book-name').value,
+                    phone: document.getElementById('book-phone').value,
+                    status: 'pendiente',
+                    createdAt: new Date().toISOString()
+                };
 
-            const booking = {
-                service: document.getElementById('book-service').value,
-                barber: document.getElementById('book-barber').value,
-                date: document.getElementById('book-date').value,
-                time: document.getElementById('book-time').value,
-                name: document.getElementById('book-name').value,
-                phone: document.getElementById('book-phone').value,
-                status: 'pendiente',
-                createdAt: new Date().toISOString()
-            };
+                try {
+                    const path = collection(db, 'artifacts', appId, 'public', 'data', 'appointments');
+                    const docRef = await addDoc(path, booking);
+                    
+                    const miNumero = "18299135723"; 
+                    const text = `💈 *NUEVA RESERVA LORHELS BARBER* 💈\n\nHola, soy *${booking.name}*. He agendado una cita:\n\n📅 *Fecha:* ${booking.date}\n⏰ *Hora:* ${booking.time}\n✂️ *Servicio:* ${booking.service}\n👨‍🔧 *Barbero:* ${booking.barber}\n\nID: ${docRef.id}`;
+                    const waUrl = `https://wa.me/${miNumero}?text=${encodeURIComponent(text)}`;
+                    
+                    openModal(
+                        '<i data-lucide="check-circle" class="text-blue-500 w-16 h-16"></i>',
+                        '¡Cita Recibida!',
+                        'Tu reserva ha sido enviada. Ahora ve a WhatsApp para enviar el comprobante.',
+                        () => { window.open(waUrl, '_blank'); showView('home'); }
+                    );
+                    bookingForm.reset();
+                } catch (err) {
+                    alert("Hubo un problema: " + err.message);
+                }
+            });
+        }
 
-            try {
-                const path = collection(db, 'artifacts', appId, 'public', 'data', 'appointments');
-                const docRef = await addDoc(path, booking);
+        // 5. BLOQUEO DE HORARIOS DINÁMICO
+        const dateInput = document.getElementById('book-date');
+        if(dateInput) {
+            const hoy = new Date().toISOString().split('T')[0];
+            dateInput.min = hoy;
+
+            dateInput.addEventListener('change', async (e) => {
+                const fecha = e.target.value;
+                const selectHora = document.getElementById('book-time');
+                const horasBase = ["10:00 AM", "11:00 AM", "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"];
                 
-                // Preparar mensaje WhatsApp
-                const text = `💈 *NUEVA RESERVA LORHELS BARBER* 💈\n\nHola, soy *${booking.name}*. He agendado una cita:\n\n📅 *Fecha:* ${booking.date}\n⏰ *Hora:* ${booking.time}\n✂️ *Servicio:* ${booking.service}\n👨‍🔧 *Barbero:* ${booking.barber}\n\nAdjunto el comprobante de pago para validar la cita. ID: ${docRef.id}`;
-                const waUrl = `https://wa.me/1234567890?text=${encodeURIComponent(text)}`;
+                selectHora.innerHTML = '<option value="" disabled selected>Cargando disponibilidad...</option>';
                 
-                openModal(
-                    '<i data-lucide="check-circle" class="text-blue-500 w-20 h-20"></i>',
-                    '¡Cita Agendada!',
-                    'Tu reserva ha sido enviada. Ahora procederemos a WhatsApp para que envíes el comprobante de pago.',
-                    () => { window.open(waUrl, '_blank'); showView('home'); }
-                );
-                bookingForm.reset();
-                lucide.createIcons();
-            } catch (err) {
-                console.error(err);
-                openModal('<i data-lucide="x-circle" class="text-red-500 w-20 h-20"></i>', 'Error de Sistema', 'No pudimos procesar la reserva. Verifica tu conexión.');
-                lucide.createIcons();
-            }
-        });
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'));
+                onSnapshot(q, (snapshot) => {
+                    const horasOcupadas = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        // Bloquear solo si la cita está confirmada o finalizada
+                        if(data.date === fecha && (data.status === 'confirmada' || data.status === 'finalizada')) {
+                            horasOcupadas.push(data.time);
+                        }
+                    });
 
-        // ADMIN SYNC LOGIC
+                    selectHora.innerHTML = '';
+                    horasBase.forEach(h => {
+                        if(!horasOcupadas.includes(h)) {
+                            const opt = document.createElement('option');
+                            opt.value = h;
+                            opt.textContent = h;
+                            selectHora.appendChild(opt);
+                        }
+                    });
+
+                    if(selectHora.options.length === 0) {
+                        selectHora.innerHTML = '<option value="" disabled selected>Sin horarios disponibles</option>';
+                    }
+                });
+            });
+        }
+
+        // 6. PANEL ADMIN Y TABLA DE CITAS
         function syncAdminData() {
-            const q = collection(db, 'artifacts', appId, 'public', 'data', 'appointments');
+            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'));
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('appointments-list');
+                if(!list) return;
+
                 let html = '';
                 let dailyRevenue = 0;
                 let dailyCount = 0;
@@ -502,15 +592,17 @@
                 snapshot.forEach(docSnap => {
                     const appt = docSnap.data();
                     const apptId = docSnap.id;
-                    const price = parseInt(appt.service.match(/\$(\d+)/)?.[1] || 0);
+                    const priceMatch = appt.service.match(/\$(\d+)/);
+                    const price = priceMatch ? parseInt(priceMatch[1]) : 0;
 
-                    if (appt.date === todayStr) {
+                    if (appt.date === todayStr && appt.status !== 'cancelada') {
                         dailyCount++;
                         if (appt.status === 'finalizada') dailyRevenue += price;
                     }
 
+                    const isConfirmado = appt.status === 'confirmada' || appt.status === 'finalizada';
                     const statusBadge = {
-                        'pendiente': 'bg-zinc-800 text-zinc-400 border border-zinc-700',
+                        'pendiente': 'bg-amber-500/10 text-amber-500 border border-amber-500/30',
                         'confirmada': 'bg-blue-600/20 text-blue-400 border border-blue-500/30',
                         'finalizada': 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30',
                         'cancelada': 'bg-red-600/20 text-red-400 border border-red-500/30'
@@ -531,18 +623,22 @@
                                 <p class="text-xs text-zinc-500">${appt.time}</p>
                             </td>
                             <td class="px-8 py-6">
-                                <span class="px-3 py-1 rounded-full text-[9px] uppercase font-bold tracking-widest ${statusBadge[appt.status] || ''}">
+                                <span class="px-3 py-1 rounded-full text-[9px] uppercase font-bold tracking-widest ${statusBadge[appt.status] || statusBadge['pendiente']}">
                                     ${appt.status}
                                 </span>
                             </td>
                             <td class="px-8 py-6 text-right">
                                 <div class="flex justify-end gap-2">
-                                    <button onclick="window.setApptStatus('${apptId}', 'confirmada')" class="p-2 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg transition" title="Confirmar">
-                                        <i data-lucide="check" size="16"></i>
-                                    </button>
-                                    <button onclick="window.setApptStatus('${apptId}', 'finalizada')" class="p-2 bg-emerald-600/10 hover:bg-emerald-600 text-emerald-400 hover:text-white rounded-lg transition" title="Finalizar">
-                                        <i data-lucide="dollar-sign" size="16"></i>
-                                    </button>
+                                    ${!isConfirmado && appt.status !== 'cancelada' ? `
+                                        <button onclick="window.confirmarReserva('${apptId}')" class="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition" title="Confirmar Depósito">
+                                            <i data-lucide="check" size="16"></i>
+                                        </button>
+                                    ` : ''}
+                                    ${appt.status === 'confirmada' ? `
+                                        <button onclick="window.setApptStatus('${apptId}', 'finalizada')" class="p-2 bg-emerald-600/10 hover:bg-emerald-600 text-emerald-400 hover:text-white rounded-lg transition" title="Finalizar Cita (Cobrar)">
+                                            <i data-lucide="dollar-sign" size="16"></i>
+                                        </button>
+                                    ` : ''}
                                     <button onclick="window.setApptStatus('${apptId}', 'cancelada')" class="p-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-lg transition" title="Cancelar">
                                         <i data-lucide="trash-2" size="16"></i>
                                     </button>
@@ -556,15 +652,22 @@
                 document.getElementById('stat-count').innerText = dailyCount;
                 document.getElementById('stat-revenue').innerText = '$' + dailyRevenue;
                 lucide.createIcons();
-            }, (err) => console.error("Firestore Error:", err));
+            });
         }
+
+        // 7. CONTROLES DE BOTONES DEL ADMIN
+        window.confirmarReserva = async (id) => {
+            if(!confirm("¿Confirmas que recibiste el depósito? Esto bloqueará el horario para los demás clientes.")) return;
+            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
+            await updateDoc(ref, { status: 'confirmada' });
+        };
 
         window.setApptStatus = async (id, status) => {
             const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
             await updateDoc(ref, { status });
         };
 
-        // UI MODALS
+        // 8. MODAL DE NOTIFICACIONES
         let _modalCb = null;
         window.openModal = (icon, title, text, cb = null) => {
             document.getElementById('modal-icon').innerHTML = icon;
@@ -581,7 +684,6 @@
         };
 
         window.refreshData = () => location.reload();
-
     </script>
 </body>
 </html>
