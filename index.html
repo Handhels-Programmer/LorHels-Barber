@@ -6,7 +6,6 @@
     <title>LorHels Barber | Modern Blue Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -74,7 +73,7 @@
         <section id="view-home" class="page-transition active-view">
             <!-- Hero Section -->
             <div class="relative h-[90vh] flex items-center justify-center overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1593702295094-22245df3b197?auto=format&fit=crop&w=1600&q=80" 
+                <img src="https://images.unsplash.com/photo-1593269233759-427ba69acca5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                      alt="Barber Shop" class="absolute inset-0 w-full h-full object-cover opacity-30">
                 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/80 to-zinc-950"></div>
                 
@@ -158,6 +157,93 @@
                 </div>
             </div>
         </section>
+
+        <section id="view-booking" class="hidden-view p-4 max-w-6xl mx-auto">
+    <div class="mb-8 text-center md:text-left">
+        <h2 class="text-3xl font-black text-white italic tracking-tighter uppercase">Agendar Cita</h2>
+        <p class="text-zinc-500 text-sm">Gestiona tu espacio en Lorhels Barber</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-7 space-y-6">
+            <form id="booking-form" class="bg-zinc-900/50 p-6 rounded-3xl border border-zinc-800 space-y-6">
+                
+                <div>
+                    <label class="block text-zinc-500 text-[10px] font-bold uppercase mb-3 tracking-widest">Paso 1: Servicio</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="service" value="Corte Clásico $500" class="peer hidden" required>
+                            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all">
+                                <span class="block text-white font-bold text-xs">Corte Clásico</span>
+                                <span class="text-blue-500 text-[10px]">$500</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="service" value="Corte + Barba $700" class="peer hidden">
+                            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all">
+                                <span class="block text-white font-bold text-xs">Corte + Barba</span>
+                                <span class="text-blue-500 text-[10px]">$700</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-zinc-500 text-[10px] font-bold uppercase mb-2">Paso 2: Fecha</label>
+                        <input type="date" id="book-date" required class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl focus:border-blue-500 outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-zinc-500 text-[10px] font-bold uppercase mb-2">Hora</label>
+                        <select id="book-time" required class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl focus:border-blue-500 outline-none text-sm">
+                            <option value="">Selecciona día</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Paso 3: Tus Datos</label>
+                    <input type="text" id="book-name" placeholder="Nombre completo" required class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl text-sm focus:border-blue-500 outline-none">
+                    <input type="tel" id="book-phone" placeholder="WhatsApp (Ej: 829...)" required class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl text-sm focus:border-blue-500 outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl transition-all uppercase tracking-widest text-sm shadow-lg shadow-blue-500/20">
+                    Confirmar Reserva
+                </button>
+            </form>
+        </div>
+
+        <div class="lg:col-span-5">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sticky top-24">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <h3 class="text-white font-bold text-sm uppercase tracking-widest">Disponibilidad en Vivo</h3>
+                </div>
+                
+                <div id="availability-status" class="space-y-4">
+                    <p class="text-zinc-500 text-xs italic">Selecciona una fecha para ver qué horas están libres hoy.</p>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-zinc-800">
+                    <h4 class="text-zinc-400 text-[10px] font-bold uppercase mb-4">Referencias:</h4>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2 text-[10px] text-zinc-500">
+                            <span class="w-3 h-3 bg-zinc-800 border border-zinc-700 rounded"></span> Disponible
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] text-zinc-500">
+                            <span class="w-3 h-3 bg-blue-600 rounded"></span> Seleccionado
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] text-zinc-500">
+                            <span class="w-3 h-3 bg-red-900/30 border border-red-500/50 rounded"></span> Ocupado / Reservado
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
         <!-- VIEW: BOOKING -->
         <section id="view-booking" class="page-transition hidden-view max-w-5xl mx-auto px-4 py-16">
@@ -412,278 +498,238 @@
 
     <!-- FIREBASE AND SCRIPT LOGIC -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Configuración Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyA_7blyQDhaE0FBiXLUqZDIrckZ-mcednk",
-            authDomain: "lorhels-barber.firebaseapp.com",
-            projectId: "lorhels-barber",
-            storageBucket: "lorhels-barber.firebasestorage.app",
-            messagingSenderId: "421121234522",
-            appId: "1:421121234522:web:853b2e53c935cbbe2a6a63"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyA_7blyQDhaE0FBiXLUqZDIrckZ-mcednk",
+        authDomain: "lorhels-barber.firebaseapp.com",
+        projectId: "lorhels-barber",
+        storageBucket: "lorhels-barber.firebasestorage.app",
+        messagingSenderId: "421121234522",
+        appId: "1:421121234522:web:853b2e53c935cbbe2a6a63"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const appId = 'lorhels-barber-blue-v1';
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const appId = 'lorhels-barber-blue-v1';
 
-        let isAdmin = false;
+    let isAdmin = false;
+    const horasBase = ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM"];
 
-        // Iniciar íconos de Lucide
-        lucide.createIcons();
+    lucide.createIcons();
 
-        // 1. AUTENTICACIÓN
-        const startApp = async () => {
-            try {
-                if (!auth.currentUser) await signInAnonymously(auth);
-            } catch (error) {
-                console.error("Auth Failure", error);
-            }
-        };
+    // --- AUTENTICACIÓN ---
+    onAuthStateChanged(auth, (user) => {
+        if (user && !user.isAnonymous) {
+            isAdmin = true;
+            syncAdminData();
+        } else {
+            isAdmin = false;
+            if(!user) signInAnonymously(auth);
+        }
+    });
 
-        onAuthStateChanged(auth, (user) => {
-            if (user && !user.isAnonymous) {
-                isAdmin = true;
-                syncAdminData();
-            } else {
-                isAdmin = false;
+    // --- NAVEGACIÓN ---
+    window.showView = (viewId) => {
+        if (viewId === 'admin' && !isAdmin) viewId = 'login'; 
+        document.querySelectorAll('section').forEach(s => {
+            s.classList.replace('active-view', 'hidden-view');
+        });
+        const target = document.getElementById('view-' + viewId);
+        if(target) {
+            target.classList.replace('hidden-view', 'active-view');
+            window.scrollTo(0, 0);
+        }
+    };
+
+    window.toggleMobileMenu = () => {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('flex');
+    };
+
+    // --- LÓGICA DE DISPONIBILIDAD (EL CORAZÓN DEL PROBLEMA) ---
+    const dateInput = document.getElementById('book-date');
+    const selectHora = document.getElementById('book-time');
+    const statusPanel = document.getElementById('availability-status');
+
+    if(dateInput) {
+        const hoy = new Date().toISOString().split('T')[0];
+        dateInput.min = hoy;
+
+        dateInput.addEventListener('change', (e) => {
+            const fechaSeleccionada = e.target.value;
+            actualizarHorariosDisponibles(fechaSeleccionada);
+        });
+    }
+
+    function actualizarHorariosDisponibles(fecha) {
+        const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'));
+        
+        onSnapshot(q, (snapshot) => {
+            const ocupados = [];
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                if(d.date === fecha && d.status !== 'cancelada') {
+                    ocupados.push(d.time);
+                }
+            });
+
+            // 1. Limpiar y llenar el SELECT
+            selectHora.innerHTML = '';
+            // 2. Limpiar y llenar el PANEL VISUAL
+            statusPanel.innerHTML = `<p class="text-white text-[10px] font-bold mb-3 uppercase tracking-widest">Estado para el ${fecha}:</p>`;
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-3 gap-2';
+
+            horasBase.forEach(hora => {
+                const estaOcupado = ocupados.includes(hora);
+                
+                // Opción en el select
+                if(!estaOcupado) {
+                    const opt = document.createElement('option');
+                    opt.value = hora; opt.textContent = hora;
+                    selectHora.appendChild(opt);
+                }
+
+                // Cuadrito en el panel lateral
+                const box = document.createElement('div');
+                box.className = `p-2 text-[10px] text-center rounded-lg border font-bold transition-all ${
+                    estaOcupado 
+                    ? 'bg-red-500/10 border-red-500/40 text-red-500 opacity-50' 
+                    : 'bg-blue-500/5 border-blue-500/20 text-blue-400'
+                }`;
+                box.innerText = hora;
+                grid.appendChild(box);
+            });
+
+            statusPanel.appendChild(grid);
+            if(selectHora.options.length === 0) {
+                selectHora.innerHTML = '<option value="">No hay cupos</option>';
             }
         });
+    }
 
-        startApp();
+    // --- RESERVAS ---
+    const bookingForm = document.getElementById('booking-form');
+    bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.disabled = true; btn.innerText = "Procesando...";
 
-        // 2. NAVEGACIÓN Y MENÚ
-        window.showView = (viewId) => {
-            if (viewId === 'admin' && !isAdmin) viewId = 'login'; 
-
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active-view');
-                section.classList.add('hidden-view');
-            });
-            const target = document.getElementById('view-' + viewId);
-            if(target) {
-                target.classList.remove('hidden-view');
-                target.classList.add('active-view');
-                window.scrollTo(0, 0);
-            }
+        const booking = {
+            service: document.getElementById('book-service').value,
+            barber: document.getElementById('book-barber').value,
+            date: document.getElementById('book-date').value,
+            time: document.getElementById('book-time').value,
+            name: document.getElementById('book-name').value,
+            phone: document.getElementById('book-phone').value,
+            status: 'pendiente',
+            createdAt: new Date().toISOString()
         };
 
-        window.toggleMobileMenu = () => {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        };
+        try {
+            const path = collection(db, 'artifacts', appId, 'public', 'data', 'appointments');
+            const docRef = await addDoc(path, booking);
+            
+            const textoWA = `💈 *LORHELS BARBER* 💈\n\nHola, soy *${booking.name}*.\nCita: ${booking.date} a las ${booking.time}\nServicio: ${booking.service}\n\n*ID de Cita:* ${docRef.id}`;
+            const url = `https://wa.me/18299135723?text=${encodeURIComponent(textoWA)}`;
+            
+            openModal(
+                '<i data-lucide="check-circle" class="text-blue-500 w-16 h-16"></i>',
+                '¡Casi listo!',
+                'Tu espacio está reservado. Ahora confirma por WhatsApp enviando tu comprobante.',
+                () => { window.open(url, '_blank'); location.reload(); }
+            );
+        } catch (err) {
+            alert("Error: " + err.message);
+            btn.disabled = false;
+        }
+    });
 
-        // 3. LÓGICA DE LOGIN Y LOGOUT
-        const loginForm = document.getElementById('login-form');
-        if(loginForm) {
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const pass = document.getElementById('login-pass').value;
-                try {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                    isAdmin = true;
-                    showView('admin');
-                } catch (error) {
-                    alert("Error: Usuario o contraseña incorrectos"); 
+    // --- ADMIN DASHBOARD ---
+    function syncAdminData() {
+        const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'), orderBy('createdAt', 'desc'));
+        onSnapshot(q, (snapshot) => {
+            const list = document.getElementById('appointments-list');
+            let count = 0; let money = 0;
+            list.innerHTML = '';
+
+            snapshot.forEach(docSnap => {
+                const d = docSnap.data();
+                const id = docSnap.id;
+                count++;
+                if(d.status === 'confirmada' || d.status === 'finalizada') {
+                    const precio = parseInt(d.service.split('$')[1]) || 0;
+                    money += precio;
                 }
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-white/5 transition";
+                row.innerHTML = `
+                    <td class="px-8 py-4"><p class="font-bold text-white">${d.name}</p><p class="text-[10px] text-zinc-500">${d.phone}</p></td>
+                    <td class="px-8 py-4 text-xs">${d.service}</td>
+                    <td class="px-8 py-4"><span class="text-blue-400 font-bold text-xs">${d.date}</span><br><span class="text-white text-xs">${d.time}</span></td>
+                    <td class="px-8 py-4">
+                        <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase ${
+                            d.status === 'confirmada' ? 'bg-emerald-500/20 text-emerald-500' : 'bg-amber-500/20 text-amber-500'
+                        }">${d.status}</span>
+                    </td>
+                    <td class="px-8 py-4 text-right">
+                        <button onclick="confirmarReserva('${id}')" class="p-2 hover:text-emerald-400"><i data-lucide="check-circle" size="18"></i></button>
+                        <button onclick="borrarReserva('${id}')" class="p-2 hover:text-red-400"><i data-lucide="trash-2" size="18"></i></button>
+                    </td>
+                `;
+                list.appendChild(row);
             });
-        }
-
-        window.logout = () => {
-            signOut(auth).then(() => location.reload());
-        };
-
-        // 4. RESERVAS Y WHATSAPP (CLIENTE)
-        const bookingForm = document.getElementById('booking-form');
-        if(bookingForm) {
-            bookingForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const booking = {
-                    service: document.getElementById('book-service').value,
-                    barber: document.getElementById('book-barber').value,
-                    date: document.getElementById('book-date').value,
-                    time: document.getElementById('book-time').value,
-                    name: document.getElementById('book-name').value,
-                    phone: document.getElementById('book-phone').value,
-                    status: 'pendiente',
-                    createdAt: new Date().toISOString()
-                };
-
-                try {
-                    const path = collection(db, 'artifacts', appId, 'public', 'data', 'appointments');
-                    const docRef = await addDoc(path, booking);
-                    
-                    const miNumero = "18299135723"; 
-                    const text = `💈 *NUEVA RESERVA LORHELS BARBER* 💈\n\nHola, soy *${booking.name}*. He agendado una cita:\n\n📅 *Fecha:* ${booking.date}\n⏰ *Hora:* ${booking.time}\n✂️ *Servicio:* ${booking.service}\n👨‍🔧 *Barbero:* ${booking.barber}\n\nID: ${docRef.id}`;
-                    const waUrl = `https://wa.me/${miNumero}?text=${encodeURIComponent(text)}`;
-                    
-                    openModal(
-                        '<i data-lucide="check-circle" class="text-blue-500 w-16 h-16"></i>',
-                        '¡Cita Recibida!',
-                        'Tu reserva ha sido enviada. Ahora ve a WhatsApp para enviar el comprobante.',
-                        () => { window.open(waUrl, '_blank'); showView('home'); }
-                    );
-                    bookingForm.reset();
-                } catch (err) {
-                    alert("Hubo un problema: " + err.message);
-                }
-            });
-        }
-
-        // 5. BLOQUEO DE HORARIOS DINÁMICO
-        const dateInput = document.getElementById('book-date');
-        if(dateInput) {
-            const hoy = new Date().toISOString().split('T')[0];
-            dateInput.min = hoy;
-
-            dateInput.addEventListener('change', async (e) => {
-                const fecha = e.target.value;
-                const selectHora = document.getElementById('book-time');
-                const horasBase = ["10:00 AM", "11:00 AM", "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"];
-                
-                selectHora.innerHTML = '<option value="" disabled selected>Cargando disponibilidad...</option>';
-                
-                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'));
-                onSnapshot(q, (snapshot) => {
-                    const horasOcupadas = [];
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        // Bloquear solo si la cita está confirmada o finalizada
-                        if(data.date === fecha && (data.status === 'confirmada' || data.status === 'finalizada')) {
-                            horasOcupadas.push(data.time);
-                        }
-                    });
-
-                    selectHora.innerHTML = '';
-                    horasBase.forEach(h => {
-                        if(!horasOcupadas.includes(h)) {
-                            const opt = document.createElement('option');
-                            opt.value = h;
-                            opt.textContent = h;
-                            selectHora.appendChild(opt);
-                        }
-                    });
-
-                    if(selectHora.options.length === 0) {
-                        selectHora.innerHTML = '<option value="" disabled selected>Sin horarios disponibles</option>';
-                    }
-                });
-            });
-        }
-
-        // 6. PANEL ADMIN Y TABLA DE CITAS
-        function syncAdminData() {
-            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'appointments'));
-            onSnapshot(q, (snapshot) => {
-                const list = document.getElementById('appointments-list');
-                if(!list) return;
-
-                let html = '';
-                let dailyRevenue = 0;
-                let dailyCount = 0;
-                const todayStr = new Date().toISOString().split('T')[0];
-
-                snapshot.forEach(docSnap => {
-                    const appt = docSnap.data();
-                    const apptId = docSnap.id;
-                    const priceMatch = appt.service.match(/\$(\d+)/);
-                    const price = priceMatch ? parseInt(priceMatch[1]) : 0;
-
-                    if (appt.date === todayStr && appt.status !== 'cancelada') {
-                        dailyCount++;
-                        if (appt.status === 'finalizada') dailyRevenue += price;
-                    }
-
-                    const isConfirmado = appt.status === 'confirmada' || appt.status === 'finalizada';
-                    const statusBadge = {
-                        'pendiente': 'bg-amber-500/10 text-amber-500 border border-amber-500/30',
-                        'confirmada': 'bg-blue-600/20 text-blue-400 border border-blue-500/30',
-                        'finalizada': 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30',
-                        'cancelada': 'bg-red-600/20 text-red-400 border border-red-500/30'
-                    };
-
-                    html += `
-                        <tr class="hover:bg-zinc-800/20 transition">
-                            <td class="px-8 py-6">
-                                <p class="font-bold text-white">${appt.name}</p>
-                                <p class="text-[10px] text-zinc-500 font-mono">${appt.phone}</p>
-                            </td>
-                            <td class="px-8 py-6">
-                                <p class="text-sm">${appt.service}</p>
-                                <p class="text-[10px] text-blue-500 font-bold uppercase">${appt.barber}</p>
-                            </td>
-                            <td class="px-8 py-6">
-                                <p class="text-sm font-bold">${appt.date}</p>
-                                <p class="text-xs text-zinc-500">${appt.time}</p>
-                            </td>
-                            <td class="px-8 py-6">
-                                <span class="px-3 py-1 rounded-full text-[9px] uppercase font-bold tracking-widest ${statusBadge[appt.status] || statusBadge['pendiente']}">
-                                    ${appt.status}
-                                </span>
-                            </td>
-                            <td class="px-8 py-6 text-right">
-                                <div class="flex justify-end gap-2">
-                                    ${!isConfirmado && appt.status !== 'cancelada' ? `
-                                        <button onclick="window.confirmarReserva('${apptId}')" class="p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition" title="Confirmar Depósito">
-                                            <i data-lucide="check" size="16"></i>
-                                        </button>
-                                    ` : ''}
-                                    ${appt.status === 'confirmada' ? `
-                                        <button onclick="window.setApptStatus('${apptId}', 'finalizada')" class="p-2 bg-emerald-600/10 hover:bg-emerald-600 text-emerald-400 hover:text-white rounded-lg transition" title="Finalizar Cita (Cobrar)">
-                                            <i data-lucide="dollar-sign" size="16"></i>
-                                        </button>
-                                    ` : ''}
-                                    <button onclick="window.setApptStatus('${apptId}', 'cancelada')" class="p-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white rounded-lg transition" title="Cancelar">
-                                        <i data-lucide="trash-2" size="16"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-
-                list.innerHTML = html || '<tr><td colspan="5" class="px-8 py-20 text-center text-zinc-700 italic">No hay registros hoy.</td></tr>';
-                document.getElementById('stat-count').innerText = dailyCount;
-                document.getElementById('stat-revenue').innerText = '$' + dailyRevenue;
-                lucide.createIcons();
-            });
-        }
-
-        // 7. CONTROLES DE BOTONES DEL ADMIN
-        window.confirmarReserva = async (id) => {
-            if(!confirm("¿Confirmas que recibiste el depósito? Esto bloqueará el horario para los demás clientes.")) return;
-            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
-            await updateDoc(ref, { status: 'confirmada' });
-        };
-
-        window.setApptStatus = async (id, status) => {
-            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
-            await updateDoc(ref, { status });
-        };
-
-        // 8. MODAL DE NOTIFICACIONES
-        let _modalCb = null;
-        window.openModal = (icon, title, text, cb = null) => {
-            document.getElementById('modal-icon').innerHTML = icon;
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-text').innerText = text;
-            document.getElementById('ui-modal').style.display = 'flex';
-            _modalCb = cb;
+            document.getElementById('stat-count').innerText = count;
+            document.getElementById('stat-revenue').innerText = '$' + money;
             lucide.createIcons();
-        };
+        });
+    }
 
-        window.closeModal = () => {
-            document.getElementById('ui-modal').style.display = 'none';
-            if (_modalCb) _modalCb();
-        };
+    // Funciones Globales para Admin
+    window.confirmarReserva = async (id) => {
+        const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
+        await updateDoc(ref, { status: 'confirmada' });
+    };
+    window.borrarReserva = async (id) => {
+        if(confirm("¿Eliminar cita?")) {
+            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'appointments', id);
+            await updateDoc(ref, { status: 'cancelada' });
+        }
+    };
+    
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-pass').value;
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+            showView('admin');
+        } catch (error) { alert("Credenciales incorrectas"); }
+    });
 
-        window.refreshData = () => location.reload();
-    </script>
+    window.logout = () => signOut(auth).then(() => location.reload());
+
+    // Modal
+    let _modalCb = null;
+    window.openModal = (icon, title, text, cb = null) => {
+        document.getElementById('modal-icon').innerHTML = icon;
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-text').innerText = text;
+        document.getElementById('ui-modal').classList.replace('hidden', 'flex');
+        _modalCb = cb;
+        lucide.createIcons();
+    };
+    window.closeModal = () => {
+        document.getElementById('ui-modal').classList.replace('flex', 'hidden');
+        if(_modalCb) _modalCb();
+    };
+</script>
 </body>
 </html>
