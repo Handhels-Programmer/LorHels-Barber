@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="do">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,19 +111,19 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="group relative overflow-hidden rounded-3xl bg-zinc-900 aspect-[3/4]">
-                    <img src="https://images.unsplash.com/photo-1593702295094-22245df3b197?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
+                    <img src="Fade.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
                     <div class="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity"><p class="bg-blue-600 text-[10px] px-2 py-1 rounded-md font-bold uppercase">Fade Moderno</p></div>
                 </div>
                 <div class="group relative overflow-hidden rounded-3xl bg-zinc-900 aspect-[3/4]">
-                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
+                    <img src="Tijera.avif" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
                     <div class="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity"><p class="bg-blue-600 text-[10px] px-2 py-1 rounded-md font-bold uppercase">Clásico Tijera</p></div>
                 </div>
                 <div class="group relative overflow-hidden rounded-3xl bg-zinc-900 aspect-[3/4]">
-                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
+                    <img src="Barra.avif" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
                     <div class="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity"><p class="bg-blue-600 text-[10px] px-2 py-1 rounded-md font-bold uppercase">Barba Sculpt</p></div>
                 </div>
                 <div class="group relative overflow-hidden rounded-3xl bg-zinc-900 aspect-[3/4]">
-                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
+                    <img src="Perfilado.avif" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Corte">
                     <div class="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity"><p class="bg-blue-600 text-[10px] px-2 py-1 rounded-md font-bold uppercase">Perfilado Pro</p></div>
                 </div>
             </div>
@@ -309,6 +309,93 @@
         </section>
     </main>
 
+    <section id="view-terms" class="page-transition hidden-view max-w-4xl mx-auto px-6 py-20">
+    <button onclick="showView('home')" class="flex items-center gap-2 text-blue-400 mb-8 hover:text-blue-300 transition">
+        <i data-lucide="arrow-left" size="18"></i> Volver al Inicio
+    </button>
+
+    <h2 class="text-4xl font-brand font-bold mb-10 tracking-tight">Términos de <span class="text-blue-500">Servicio</span></h2>
+    
+    <div class="space-y-8 text-zinc-400 leading-relaxed text-sm md:text-base">
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">1. Aceptación de Términos</h3>
+            <p>Al acceder y utilizar el sistema de reservas de LorHels Barber, usted acepta cumplir con estos términos y condiciones. Este sistema está diseñado para facilitar la gestión de citas y productos en nuestra sucursal.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">2. Política de Reservas y Cancelaciones</h3>
+            <ul class="list-disc ml-5 space-y-2">
+                <li>Las citas deben reservarse con al menos 2 horas de antelación.</li>
+                <li>Para confirmar su cita, es obligatorio el envío del comprobante de depósito vía WhatsApp.</li>
+                <li>Las cancelaciones deben realizarse con un mínimo de 4 horas de antelación. De lo contrario, el depósito no será reembolsable.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">3. Puntualidad</h3>
+            <p>Se otorga un margen de tolerancia de 10 minutos. Pasado este tiempo, la cita podrá ser cancelada o reasignada según la disponibilidad del barbero, con el fin de no retrasar los servicios de los siguientes clientes.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">4. Precios y Pagos</h3>
+            <p>Los precios mostrados en la web son informativos y corresponden a los servicios base. Servicios adicionales o requerimientos especiales podrán variar el costo final en caja.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">5. Uso de Datos</h3>
+            <p>Sus datos personales (Nombre y WhatsApp) solo se utilizan para la gestión de su cita y comunicaciones directas de la barbería. LorHels Barber no compartirá su información con terceros.</p>
+        </div>
+
+        <div class="pt-10 border-t border-zinc-800 text-[10px] uppercase tracking-widest text-zinc-600">
+            Última actualización: 26 de Abril, 2026
+        </div>
+    </div>
+</section>
+
+    <section id="view-privacy" class="page-transition hidden-view max-w-4xl mx-auto px-6 py-20">
+    <button onclick="showView('home')" class="flex items-center gap-2 text-blue-400 mb-8 hover:text-blue-300 transition">
+        <i data-lucide="arrow-left" size="18"></i> Volver al Inicio
+    </button>
+
+    <h2 class="text-4xl font-brand font-bold mb-10 tracking-tight">Política de <span class="text-blue-500">Privacidad</span></h2>
+    
+    <div class="space-y-8 text-zinc-400 leading-relaxed text-sm md:text-base">
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">1. Información que Recopilamos</h3>
+            <p>En LorHels Barber recopilamos únicamente la información estrictamente necesaria para brindarle nuestros servicios de agendamiento. Esto incluye su nombre completo, número de teléfono (WhatsApp), así como el historial de los servicios y productos adquiridos en nuestra sucursal.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">2. Uso de la Información</h3>
+            <p>Los datos proporcionados se utilizan exclusivamente para:</p>
+            <ul class="list-disc ml-5 space-y-2 mt-2">
+                <li>Gestionar, bloquear y confirmar sus reservas en nuestro calendario.</li>
+                <li>Enviarle notificaciones, recordatorios de citas y confirmaciones a través de WhatsApp.</li>
+                <li>Mantener un registro interno para mejorar la atención y conocer las preferencias de nuestros clientes frecuentes.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">3. Protección y Seguridad</h3>
+            <p>Nos tomamos muy en serio la seguridad de su información. Sus datos se almacenan en infraestructuras digitales seguras. LorHels Barber garantiza que <strong>nunca compartirá, venderá ni alquilará</strong> su información personal a terceros o empresas de publicidad bajo ninguna circunstancia.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">4. Retención de los Datos</h3>
+            <p>Conservaremos sus datos personales y el historial de sus cortes durante el tiempo que siga siendo un cliente de la barbería. Esta retención nos ayuda a agilizar sus futuras reservas.</p>
+        </div>
+
+        <div>
+            <h3 class="text-white font-bold text-lg mb-3">5. Derechos del Usuario</h3>
+            <p>Usted tiene derecho a solicitar en cualquier momento la revisión, corrección o eliminación permanente de sus datos de nuestro sistema. Para ejercer este derecho, simplemente comuníquese con el administrador directamente en nuestra sucursal o respondiendo al WhatsApp de la barbería.</p>
+        </div>
+
+        <div class="pt-10 border-t border-zinc-800 text-[10px] uppercase tracking-widest text-zinc-600">
+            Última actualización: 26 de Abril, 2026
+        </div>
+    </div>
+</section>
+
     <footer class="bg-zinc-900/50 border-t border-zinc-800 pt-16 mt-32">
     <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-12 text-zinc-500 text-sm pb-16">
         <div class="md:col-span-1">
@@ -327,8 +414,8 @@
         <div>
             <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-[0.2em]">Legal</h4>
             <ul class="space-y-3">
-                <li><a href="#" class="hover:text-blue-400 transition">Términos de Servicio</a></li>
-                <li><a href="#" class="hover:text-blue-400 transition">Privacidad</a></li>
+                <li><button onclick="showView('terms')" class="hover:text-blue-400 transition text-left">Términos de Servicio</button></li>
+                <li><button onclick="showView('privacy')" class="hover:text-blue-400 transition text-left">Privacidad</button></li>
             </ul>
         </div>
         <div>
@@ -339,12 +426,16 @@
             </div>
         </div>
     </div>
-    <div class="border-t border-zinc-800 p-6 text-center text-zinc-500 text-sm">
-        <a href="https://handhels-programmer.github.io/LorHels-Systems" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium">
+    
+    <!-- Footer -->
+    <footer class="p-6 text-center text-slate-500 text-sm border-t border-slate-800 mt-auto">
+ 
+        <p>&copy; 2026
+            <a href="https://lorhels.web.app" target="\_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium">
             LorHels Systems
-        </a> 
-        &copy; 2026 - Soluciones Digitales a Medida
-    </div>
+        </a> Todos los derechos reservados.</p>
+        <p style="margin-top: 10px; color: #4b5563;">Desarrollado con pasión para brindar las mejores soluciones.</p>
+    </footer>
 </footer>
 
     <div id="ui-modal" class="fixed inset-0 z-[100] bg-black/90 hidden items-center justify-center p-6">
